@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	fun "hlcli.com/m/v2/internal"
+	"github.com/spf13/viper"
 )
 
 var name string
@@ -15,14 +15,13 @@ var rootCmd = &cobra.Command{
 	Long:    "何林测试cli工具",
 	Version: "betav1版本，不稳定版，在学习K8s",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("进入这里了")
+		viper.Set("name", name)
+		fmt.Println("name:", name)
 	},
 }
 
 func Exec() {
-	rootCmd.AddCommand(fun.FuncCmd)
 	rootCmd.Flags().StringVarP(&name, "name", "n", "", "the name to be greeted")
-	fmt.Println("name:", name)
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}
